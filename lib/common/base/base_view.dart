@@ -15,4 +15,7 @@ abstract class BaseView {
 
   void showDisConnect();
 
+  //token失效，去登录页面
+  void tokenError();
+
 }

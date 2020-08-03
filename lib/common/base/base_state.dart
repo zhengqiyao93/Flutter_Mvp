@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/constants/constants.dart';
+import 'package:flutter_app/common/route/route_util.dart';
+import 'package:flutter_app/common/utils/util_sp.dart';
 import 'package:flutter_app/common/utils/util_toast.dart';
 import 'package:flutter_app/common/widget/dialog_loading.dart';
 
+import '../application.dart';
 import 'base_presenter.dart';
 import 'base_view.dart';
 
@@ -105,6 +109,15 @@ abstract class BaseState<P extends BasePresenter, W extends StatefulWidget>
     if(null != mPresenter){
       mPresenter.detachView();
     }
+  }
+
+  @override
+  void tokenError() {
+    SpUtil.remove(SPKey.USER).then((bool){
+      Application.userEntity = null;
+      RouteUtil.goLoginPage(context);
+    });
+
   }
 
   //不会被销毁,占内存中

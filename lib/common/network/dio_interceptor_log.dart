@@ -1,7 +1,9 @@
-
+import 'dart:convert' as convert;
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+
+
 
 import 'dio_exception.dart';
 
@@ -15,7 +17,6 @@ class LogHttpInterceptor extends Interceptor {
     print("headers = ${options.headers}");
     print("params = ${options.data}");
     print("\n______________________________ 请求数据 end ______________________________");
-    return super.onRequest(options);
     return super.onRequest(options);
   }
 
@@ -61,6 +62,10 @@ class LogHttpInterceptor extends Interceptor {
     print("code = ${response.statusCode}");
     print("data = ${response.data}");
     print("\n______________________________ 响应数据 end ______________________________");
+    if (response.data is String) {
+      //针对返回string类型的结果，转换为json
+      response.data = convert.jsonDecode(response.data);
+    }
     return super.onResponse(response);
   }
 

@@ -45,6 +45,11 @@ class RxObserver<T> {
 
       if (response.resultCode != 100) {
         handlerError(response.resultMsg);
+        //错误处理
+        if (response.resultCode == 205 || response.resultCode == 206) {
+          //token失效
+          view.tokenError();
+        }
       } else {
         onSuccess(response.getData());
       }
